@@ -13,26 +13,10 @@
         pincel.fill();
     }
 
-    function desenhaX(cor, x, y) {
+    function desenhaTexto(texto, x, y, cor) {
+        pincel.font = "55px Arial";
         pincel.fillStyle = cor;
-        pincel.beginPath();
-        pincel.moveTo(x-12, y-15);
-        pincel.lineTo(x-1, y-4);
-        pincel.lineTo(x, y-4);
-        pincel.lineTo(x+11, y-15);
-        pincel.lineTo(x+14, y-12);
-        pincel.lineTo(x+3, y-1);
-        pincel.lineTo(x+3, y);
-        pincel.lineTo(x+14, y+12);
-        pincel.lineTo(x+11, y+14);
-        pincel.lineTo(x, y+3);
-        pincel.lineTo(x-1, y+3);
-        pincel.lineTo(x-12, y+14);
-        pincel.lineTo(x-15, y+11);
-        pincel.lineTo(x-4, y);
-        pincel.lineTo(x-4, y-1);
-        pincel.lineTo(x-15, y-12);
-        pincel.fill();
+        pincel.fillText(texto, x, y);
     }
 
     function desenha(event) {
@@ -58,7 +42,7 @@
         desenhaRetangulo(cores[1], 50, 0, 50, 50);
         desenhaRetangulo(cores[2], 100, 0, 50, 50);
         desenhaRetangulo("black", 550, 0, 50, 50);
-        desenhaX("white", 575, 25);
+        desenhaTexto("X", 555, 45, "white");
     }
 
     function autoriza() {
