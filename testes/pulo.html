@@ -1,0 +1,88 @@
+<canvas width="600" height="400"></canvas>
+
+<p>Tentei fazer algum tipo de gravidade</p>
+<p>Clique na tela para criar um objeto</p>
+<p>Mova-se com A, D e pule com a tecla de espaço</p>
+
+<script>
+    function desenhaRetangulo(cor, xi, yi, xf, yf, corDaBorda) {
+        pincel.fillStyle = cor;
+        pincel.fillRect(xi, yi, xf, yf);
+
+        if (corDaBorda !== undefined) {
+            pincel.strokeStyle = corDaBorda;
+            pincel.strokeRect(xi, yi, xf, yf);   
+        }
+    }
+
+    function limpaTela() {
+        pincel.clearRect(0, 0, 600, 400);
+    }
+
+    function desenhaCenario() {
+        desenhaRetangulo("lightblue", 0, 0, 600, 399);
+        desenhaRetangulo("lightgreen", 0, 399, 600, 100);
+    }
+
+    function spawnaPersonagem(evento){
+        x = evento.pageX - tela.offsetLeft;
+        y = evento.pageY - tela.offsetTop;
+
+        desenhaCenario();
+        desenhaRetangulo("black", x-5, y-5, 50, 50);
+    }
+
+    function animaPersonagem() {
+        desenhaCenario();
+        desenhaRetangulo("black", x-5, y-5, 50, 50);
+    }
+
+    function andaParaDireita() {
+        x += 10;
+        animaPersonagem();
+    }
+
+    function andaParaEsquerda() {
+        x -= 10;
+        animaPersonagem();
+    }
+
+    function aplicaGravidade() {
+        if (y < 351 && !pulando) {
+            y += 5;
+            animaPersonagem();
+        }
+        if (pulando) {
+            if (y <= 250) {
+                pulando = false;
+            }
+            y -= 5;
+            animaPersonagem();
+        }
+    }
+
+    function movimentaPersonagem(evento) {
+        console.log(evento.keyCode)
+        if (evento.keyCode == 68) { andaParaDireita(); }
+        if (evento.keyCode == 65) { andaParaEsquerda(); }
+        if (evento.keyCode == 32) { pula(); }
+    }
+
+    function pula() {
+        pulando = true;
+    }
+
+    var tela = document.querySelector("canvas");
+    var pincel = tela.getContext("2d");
+    var x;
+    var y;
+    var pulando;
+
+    desenhaCenario();
+
+    setInterval(aplicaGravidade, 10);
+
+    tela.onclick = spawnaPersonagem;
+    document.onkeydown = movimentaPersonagem;
+
+</script>

@@ -1,0 +1,104 @@
+<style>
+
+    body {
+        background-color: rgb(255, 225, 180);
+    }
+
+    canvas {
+        margin-left: 60px;
+    }
+
+    h1 {
+        margin-left: 110px;
+        margin-top: 10;
+    }
+
+    p {
+        margin-left: 105px;
+    }
+
+</style>
+
+<h1>Jogo da Velha</h1>
+
+<canvas width="300" height="300"></canvas>
+<input type="color" name="" id="cor">
+
+<p>pressione "D" para limpar a tela</p>
+
+<script>
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = cor.value;
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * 3.14);
+        pincel.fill();
+    }
+
+    function desenhaRetangulo(cor, xi, yi, xf, yf, corDaBorda) {
+
+        pincel.fillStyle = cor;
+        pincel.fillRect(xi, yi, xf, yf);
+
+        if (corDaBorda != undefined) {
+
+            pincel.strokeStyle = corDaBorda;
+            pincel.strokeRect(xi, yi, xf, yf);
+        }
+    }
+
+    function desenhaJogo() {
+
+        for (var x = 0; x < 300; x += 100) {
+
+            for (var y = 0; y < 300; y += 100) {
+
+                desenhaRetangulo("white", x, y, 100, 100, "black");
+            }
+        }
+    }
+
+    function desenhar(evento) {
+
+        if (desenha) {
+            
+            var x = evento.pageX - tela.offsetLeft;
+            var y = evento.pageY - tela.offsetTop;
+
+            desenhaCirculo(x, y, 5);
+        }
+    }
+
+    function verificaT() {
+
+        desenha = true;
+    }
+
+    function verificaF() {
+
+        desenha = false;
+    }
+
+    function leDoTeclado(evento) {
+
+        if (evento.keyCode == 68) {
+
+            desenhaJogo();
+        }
+    }
+
+    var tela = document.querySelector("canvas");
+    var pincel = tela.getContext("2d");
+    var cor = document.querySelector("input#cor");
+    var desenha = false;
+
+    desenhaJogo();
+
+    tela.onmousedown = verificaT;
+    tela.onmouseup = verificaF;
+    tela.onmousemove = desenhar;
+    tela.onmouseout = verificaF;
+    document.onkeydown = leDoTeclado;
+
+</script>

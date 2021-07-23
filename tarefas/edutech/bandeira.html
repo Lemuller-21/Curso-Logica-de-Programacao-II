@@ -1,0 +1,92 @@
+<canvas height="400" width="600"></canvas>
+
+<script>
+    function desenhaRetangulo(cor, xInicial, yInicial, xFinal, yFinal) {
+        pincel.fillStyle = cor;
+        pincel.fillRect(xInicial, yInicial, xFinal, yFinal);
+    }
+
+    function desenhaCirculo(cor, x, y, raio) {
+        pincel.fillStyle = cor;
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2*3.14);
+        pincel.fill();
+    }
+    
+    function desenhaLosango(cor, x1, y1, x2, y2, x3, y3) {
+
+        // ORDEM: ESQUERDA -> BAIXO -> DIREITA -> CIMA
+
+        pincel.fillStyle = cor;
+        pincel.beginPath();
+        pincel.moveTo(x1, y1);
+        pincel.lineTo(x2, y2);
+        pincel.lineTo(x3, y1);
+        pincel.lineTo(x2, y3);
+        pincel.fill()
+    }
+
+    function desenhaTexto(texto, x, y, cor) {
+        pincel.font = "15px Georgia";
+        pincel.fillStyle = cor;
+        pincel.fillText(texto, x, y);
+    }
+
+    function desenhaEstrela(x, y){
+		pincel.beginPath();
+		pincel.fillStyle = "white";
+		pincel.moveTo(x, y-5);
+		pincel.lineTo(x-1, y-1);
+		pincel.lineTo(x-5, y-1);
+		pincel.lineTo(x-2, y+1);
+		pincel.lineTo(x-3, y+5);
+		pincel.lineTo(x, y+3);
+		pincel.lineTo(x+3, y+5);
+		pincel.lineTo(x+2, y+1);
+		pincel.lineTo(x+5, y-1);
+		pincel.lineTo(x+1, y-1);
+		pincel.fill();
+	}
+
+    function desenhaBandeiradoBrasil() {
+        desenhaRetangulo("darkgreen", 0, 0, 600, 400);
+        desenhaLosango("yellow", 50, 200, 300, 350, 550, 50);
+        desenhaCirculo("blue", 300, 200, 100);
+        desenhaRetangulo("white", 200, 187, 200, 15);
+        desenhaTexto("ORDEM E PROGRESSO", 219, 200, "black");
+        desenhaEstrela(340, 170);
+        desenhaEstrela(222, 226);
+        desenhaEstrela(230, 250);
+        desenhaEstrela(240, 240);
+        desenhaEstrela(250, 230);
+        desenhaEstrela(260, 215);
+        desenhaEstrela(259, 258);
+        desenhaEstrela(256, 275);
+        desenhaEstrela(304, 240);
+        desenhaEstrela(285, 238);
+        desenhaEstrela(321, 238);
+        desenhaEstrela(300, 220);
+        desenhaEstrela(301, 260);
+        desenhaEstrela(315, 280);
+        desenhaEstrela(280, 275);
+        desenhaEstrela(360, 250);
+        desenhaEstrela(345, 253);
+        desenhaEstrela(325, 256);
+        desenhaEstrela(335, 268);
+        desenhaEstrela(355, 266);
+        desenhaEstrela(336, 283);
+        desenhaEstrela(322, 215);
+        desenhaEstrela(340, 235);
+        desenhaEstrela(375, 240);
+        desenhaEstrela(365, 230);
+        desenhaEstrela(355, 220);
+        desenhaEstrela(385, 215);
+    }
+
+    var tela = document.querySelector("canvas");
+    var pincel = tela.getContext("2d");
+
+    desenhaBandeiradoBrasil();
+
+    
+</script>

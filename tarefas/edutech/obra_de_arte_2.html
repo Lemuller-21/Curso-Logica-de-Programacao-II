@@ -1,0 +1,102 @@
+<canvas width="600" height="400"></canvas>
+
+<script>
+    function desenhaRetangulo(cor, xInicial, yInicial, xFinal, yFinal) {
+        pincel.fillStyle = cor;
+        pincel.fillRect(xInicial, yInicial, xFinal, yFinal);
+    }
+
+    function desenhaCirculo(cor, x, y, raio) {
+        pincel.fillStyle = cor;
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * 3.14);
+        pincel.fill();
+    }
+
+    function desenhaX(cor, x, y) {
+        pincel.fillStyle = cor;
+        pincel.beginPath();
+        pincel.moveTo(x-12, y-15);
+        pincel.lineTo(x-1, y-4);
+        pincel.lineTo(x, y-4);
+        pincel.lineTo(x+11, y-15);
+        pincel.lineTo(x+14, y-12);
+        pincel.lineTo(x+3, y-1);
+        pincel.lineTo(x+3, y);
+        pincel.lineTo(x+14, y+12);
+        pincel.lineTo(x+11, y+14);
+        pincel.lineTo(x, y+3);
+        pincel.lineTo(x-1, y+3);
+        pincel.lineTo(x-12, y+14);
+        pincel.lineTo(x-15, y+11);
+        pincel.lineTo(x-4, y);
+        pincel.lineTo(x-4, y-1);
+        pincel.lineTo(x-15, y-12);
+        pincel.fill();
+    }
+
+    function desenha(event) {
+        x = event.pageX - tela.offsetLeft;
+        y = event.pageY - tela.offsetTop;
+
+        var areaProtegida = x < 155 && y < 55 || x > 545 && y < 55;
+
+        if (corAtual == 3) {
+            raio = 15;
+        } else {
+            raio = 5;
+        }
+
+        if (autorizacao && !areaProtegida) {
+            desenhaCirculo(cores[corAtual], x, y, raio);
+        }
+    }
+
+    function desenhaTela() {
+        desenhaRetangulo("lightgray", 0, 0, 600,400);
+        desenhaRetangulo(cores[0], 0, 0, 50, 50);
+        desenhaRetangulo(cores[1], 50, 0, 50, 50);
+        desenhaRetangulo(cores[2], 100, 0, 50, 50);
+        desenhaRetangulo("black", 550, 0, 50, 50);
+        desenhaX("white", 575, 25);
+    }
+
+    function autoriza() {
+        if (x > 0 && x <= 50 && y > 0 && y <= 50) {
+            corAtual = 0;
+        }
+        if (x > 50 && x <= 100 && y > 0 && y <= 50) {
+            corAtual = 1;
+        }
+        if (x > 100 && x <= 150 && y > 0 && y <= 50) {
+            corAtual = 2;
+        }
+        if (x > 550 && x <= 600 && y > 0 && y <= 50) {
+            corAtual = 3;
+        }
+
+        autorizacao = true;
+    }
+
+    function desaltoriza() {
+        autorizacao = false;
+    }
+
+    function test() {
+        alert("foi");
+    }
+
+    var tela = document.querySelector("canvas");
+    var pincel = tela.getContext("2d");
+    var autorizacao = false
+    var cores = ["red", "blue", "green", "lightgray"];
+    var corAtual = 0;
+    var raio;
+
+    desenhaTela();
+
+    tela.onmousemove = desenha;
+    tela.onmousedown = autoriza
+    tela.onmouseup = desaltoriza;
+    tela.onmouseout = desaltoriza;
+</script>

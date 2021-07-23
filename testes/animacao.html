@@ -1,0 +1,129 @@
+<canvas width="600" height="400"></canvas>
+
+<h1>Teste de Animação</h1>
+<p>Tentei fazer algo que muda quando se move</p>
+<p>Clique na tela para criar um objeto e use W, A, S e D para se mover</p>
+
+<script>
+    function desenhaCirculo(cor, x, y, raio) {
+        pincel.fillStyle = cor;
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * 3.10);
+        pincel.fill();
+    }
+
+    function desenhaRetangulo(cor, xi, yi, xf, yf, corDaBorda) {
+        pincel.fillStyle = cor;
+        pincel.fillRect(xi, yi, xf, yf);
+
+        if (corDaBorda !== undefined) {
+            pincel.strokeStyle = corDaBorda;
+            pincel.strokeRect(xi, yi, xf, yf);   
+        }
+    }
+
+    function limpaTela() {
+        pincel.clearRect(0, 0, 600, 400);
+        desenhaRetangulo("white", 0, 0, 600, 400, "black");
+    }
+
+    function desenhaSprite(evento) {
+        x = evento.pageX - tela.offsetLeft;
+        y = evento.pageY - tela.offsetTop;
+
+        limpaTela();
+        desenhaCirculo("black", x, y, 20);
+        desenhaRetangulo("white", x-19, y-2, 38, 4);
+        desenhaRetangulo("white", x-2, y-19, 4, 38);
+    }
+    
+    function criaSprite1(x, y) {
+        desenhaCirculo("black", x, y, 20);
+        desenhaRetangulo("white", x-19, y-2, 38, 4);
+        desenhaRetangulo("white", x-2, y-19, 4, 38);
+    }
+
+    function criaSprite2(x, y) {
+        desenhaCirculo("black", x, y, 20);
+
+        pincel.fillStyle = "white";
+        pincel.beginPath();
+        pincel.moveTo(x-12, y-15);
+        pincel.lineTo(x-1, y-4);
+        pincel.lineTo(x, y-4);
+        pincel.lineTo(x+11, y-15);
+        pincel.lineTo(x+14, y-12);
+        pincel.lineTo(x+3, y-1);
+        pincel.lineTo(x+3, y);
+        pincel.lineTo(x+14, y+12);
+        pincel.lineTo(x+11, y+14);
+        pincel.lineTo(x, y+3);
+        pincel.lineTo(x-1, y+3);
+        pincel.lineTo(x-12, y+14);
+        pincel.lineTo(x-15, y+11);
+        pincel.lineTo(x-4, y);
+        pincel.lineTo(x-4, y-1);
+        pincel.lineTo(x-15, y-12);
+        pincel.fill();
+    }
+
+    function anima() {
+        if (sprite == 1) {
+            criaSprite1(x, y);
+        } else if (sprite == 2) {
+            criaSprite2(x, y);
+        }
+    }
+
+    function selecionaSprite() {
+        if (sprite == 1) {
+            sprite = 2;
+        } else if (sprite == 2) {
+            sprite = 1;
+        }
+    }
+
+    function andaParaDireita() {
+        limpaTela();
+        x += 3;
+        anima();
+    }
+
+    function andaParaEsquerda() {
+        limpaTela();
+        x -= 3;
+        anima();
+    }
+
+    function andaParaCima() {
+        limpaTela();
+        y -= 3;
+        anima();
+    }
+
+    function andaParaBaixo() {
+        limpaTela();
+        y += 3;
+        anima();
+    }
+
+    function escuta(evento) {
+        if (evento.keyCode == 68) { andaParaDireita(); }
+        if (evento.keyCode == 65) { andaParaEsquerda(); }
+        if (evento.keyCode == 87) { andaParaCima(); }
+        if (evento.keyCode == 83) { andaParaBaixo(); }
+    }
+
+    var tela = document.querySelector("canvas");
+    var pincel = tela.getContext("2d");
+    var x;
+    var y;
+    var sprite = 1;
+
+    desenhaRetangulo("white", 0, 0, 600, 400, "black");
+
+    document.onkeydown = escuta;
+    tela.onclick = desenhaSprite;
+    setInterval(selecionaSprite, 200);
+
+</script>
